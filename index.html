@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090d">
+<title>MR S4M WEB STORE</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#08090d;--card:#12141d;--green:#a5ff55;--purple:#a855f7;--text:#f5f5fa;--muted:#999caf}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{position:sticky;top:0;z-index:5;background:#090a0feF;backdrop-filter:blur(15px);border-bottom:1px solid #252633;padding:15px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-size:19px;font-weight:900;letter-spacing:-.5px}
+.logo span{color:var(--green)}
+button,a{cursor:pointer}
+.btn{background:var(--green);color:#10130b;border:0;padding:11px 17px;border-radius:10px;font-weight:bold;text-decoration:none}
+.hero{text-align:center;padding:65px 18px 38px;background:radial-gradient(ellipse at top,#45206c55,transparent 65%)}
+.badge{display:inline-block;border:1px solid #a5ff5544;background:#a5ff5510;color:var(--green);padding:8px 13px;border-radius:30px;font-size:12px;margin-bottom:22px}
+h1{font-size:clamp(32px,7vw,58px);line-height:1.12;max-width:750px;margin:auto}
+h1 span{color:var(--green)}
+.hero p{color:var(--muted);line-height:1.7;margin:17px auto 25px;max-width:500px;font-size:14px}
+.search{display:flex;max-width:500px;margin:0 auto;background:var(--card);border:1px solid #303140;border-radius:13px;padding:5px}
+.search input{flex:1;min-width:0;background:none;border:0;outline:0;color:white;padding:12px;font-size:14px}
+.stats{display:flex;justify-content:center;gap:35px;margin-top:28px}
+.stats strong{display:block;font-size:21px;color:var(--green)}
+.stats small{color:var(--muted);font-size:11px}
+main{max-width:1100px;margin:auto;padding:25px 18px 60px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0}
+.section-head h2{font-size:21px}
+.section-head p{color:var(--muted);font-size:12px;margin-top:6px}
+.categories{display:flex;gap:9px;overflow-x:auto;padding:5px 0 20px}
+.category{white-space:nowrap;padding:10px 15px;border-radius:10px;border:1px solid #292b38;background:var(--card);color:#d8d8e5}
+.category.active{background:var(--green);color:#10130b;border-color:var(--green);font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px}
+.app{background:linear-gradient(145deg,#171923,#101117);border:1px solid #282a37;border-radius:17px;padding:16px;transition:.2s}
+.app:hover{border-color:#a5ff5588;transform:translateY(-3px)}
+.icon{width:55px;height:55px;border-radius:15px;background:linear-gradient(135deg,#a855f7,#34205a);display:grid;place-items:center;font-size:26px;margin-bottom:15px}
+.app h3{font-size:15px;margin-bottom:7px;overflow-wrap:anywhere}
+.app p{font-size:12px;color:var(--muted);line-height:1.5;min-height:36px}
+.app .btn{display:block;text-align:center;margin-top:15px;font-size:12px;padding:10px}
+.empty{grid-column:1/-1;text-align:center;padding:35px;color:var(--muted)}
+.notice{margin-top:35px;padding:20px;border:1px solid #a855f744;background:#a855f70c;border-radius:15px;line-height:1.7;font-size:13px;color:#c8c5d5}
+footer{text-align:center;padding:25px 15px;border-top:1px solid #242531;color:var(--muted);font-size:12px;line-height:2}
+footer strong{color:var(--green)}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}.hero{padding-top:85px}}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">MR S4M <span>WEB STORE</span></div>
+  <button class="btn" onclick="showLogin()">LOGIN ↗</button>
+</header>
+
+<section class="hero">
+  <div class="badge">✦ YOUR DIGITAL APP MARKETPLACE</div>
+  <h1>Discover Your Next <span>Favorite App.</span></h1>
+  <p>Explore useful web applications and Android apps in one place. Built for the digital world by MR SAM CHOWDHURY.</p>
+  <div class="search">
+    <input id="search" type="search" placeholder="Search apps..." oninput="renderApps()">
+    <button class="btn" onclick="renderApps()">SEARCH</button>
+  </div>
+  <div class="stats">
+    <div><strong id="appCount">0</strong><small> APPLICATIONS</small></div>
+    <div><strong>24/7</strong><small> ACCESS</small></div>
+    <div><strong>01</strong><small> PLATFORM</small></div>
+  </div>
+</section>
+
+<main>
+  <div class="section-head">
+    <div><h2>Explore Applications</h2><p>Find the right tools for your digital life.</p></div>
+  </div>
+
+  <div class="categories">
+    <button class="category active" onclick="setCategory('All',this)">All Apps</button>
+    <button class="category" onclick="setCategory('AI',this)">AI Tools</button>
+    <button class="category" onclick="setCategory('Tools',this)">Web Tools</button>
+    <button class="category" onclick="setCategory('Android',this)">Android APK</button>
+    <button class="category" onclick="setCategory('Games',this)">Games</button>
+  </div>
+
+  <div class="grid" id="appGrid"></div>
+
+  <div class="notice">
+    <strong>🛡️ MR S4M WEB STORE</strong><br>
+    A central platform for web applications and Android apps. Applications and download links will be published by the administrator.
+  </div>
+</main>
+
+<footer>
+  © <span id="year"></span> MR S4M WEB STORE<br>
+  Developed with care by <strong>MR SAM CHOWDHURY</strong>
+</footer>
+
+<script>
+const apps = [
+ {name:"AI Chat & Voice Studio",category:"AI",icon:"🤖",description:"AI chat and text-to-speech tools.",url:""},
+ {name:"MR S4M Tools",category:"Tools",icon:"🛠️",description:"A collection of useful web tools.",url:""},
+ {name:"DCS Community",category:"Tools",icon:"🛡️",description:"Digital security resources and tools.",url:""},
+ {name:"Android Applications",category:"Android",icon:"📱",description:"Android apps published by the admin.",url:""},
+ {name:"Gaming Apps",category:"Games",icon:"🎮",description:"Discover gaming applications.",url:""}
+];
+let selectedCategory="All";
+
+function renderApps(){
+ const query=document.getElementById("search").value.toLowerCase().trim();
+ const filtered=apps.filter(app=>(selectedCategory==="All"||app.category===selectedCategory)&&(app.name+" "+app.description+" "+app.category).toLowerCase().includes(query));
+ document.getElementById("appCount").textContent=apps.length;
+ document.getElementById("appGrid").innerHTML=filtered.length?filtered.map(app=>`
+ <article class="app">
+ <div class="icon">${app.icon}</div>
+ <h3>${escapeHTML(app.name)}</h3>
+ <p>${escapeHTML(app.description)}</p>
+ <button class="btn" style="width:100%" onclick="openApp('${escapeHTML(app.name)}')">VIEW APP ↗</button>
+ </article>`).join(""):'<div class="empty">No applications found. Try another search.</div>';
+}
+function setCategory(category,button){
+ selectedCategory=category;
+ document.querySelectorAll(".category").forEach(b=>b.classList.remove("active"));
+ button.classList.add("active");
+ renderApps();
+}
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function openApp(name){
+ alert(name+"\\n\\nThe app page and secure login system will be connected in the next development steps.");
+}
+function showLogin(){
+ alert("Login and registration will be connected after we build the backend.");
+}
+document.getElementById("year").textContent=new Date().getFullYear();
+renderApps();
+</script>
+</body>
+</html>
